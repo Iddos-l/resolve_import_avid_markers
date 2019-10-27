@@ -52,16 +52,19 @@ def main():
 
     fps = int(float(currentProject.GetSetting('timelineFrameRate')))
 
+    print('Working...')
     with open(markersFile, 'r') as infile:
         for line in infile:
             matches = re.search(pattern, line)
-            tc = timecode2frames(matches.group(2), fps)
-            title = matches.group(3)
-            user = matches.group(1)
-            apply = currentTimeline.AddMarker(tc, 'Blue', title, user, 1)
+            if matches:
+                tc = timecode2frames(matches.group(2), fps)
+                title = matches.group(3)
+                user = matches.group(1)
+                apply = currentTimeline.AddMarker(tc, 'Blue', title, user, 1)
 
     infile.close()
     projectManager.SaveProject()
+    print('Done!')
 
 if __name__ == '__main__':
     main()
