@@ -46,6 +46,7 @@ def main():
     projectManager = resolve.GetProjectManager()
     currentProject = projectManager.GetCurrentProject()
     currentTimeline = currentProject.GetCurrentTimeline()
+    offset = currentTimeline.GetStartFrame()
 
     if currentTimeline == None:
         messageWindow('Please select a timeline')
@@ -60,7 +61,7 @@ def main():
                 tc = timecode2frames(matches.group(2), fps)
                 title = matches.group(3)
                 user = matches.group(1)
-                apply = currentTimeline.AddMarker(tc, 'Blue', title, user, 1)
+                apply = currentTimeline.AddMarker(tc-offset, 'Blue', title, user, 1)
 
     infile.close()
     projectManager.SaveProject()
